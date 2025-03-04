@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.PatentComplaintsMapper">
+    <resultMap id="com.example.demo.mapper.PatentComplaintsMapper" type="PatentComplaintsMap">
+        <result column="complaintId" property="complaint_id" jdbcType="INTEGER"/>
+        <result column="intellectuatPropertyId" property="intellectual_patent_id" jdbcType="INTEGER"/>
+        <result column="complaintTime" property="complaint_time" jdbcType="VARCHAR"/>
+        <result column="userId" property="user_id" jdbcType="INTEGER"/>
+        <result column="complaintProcess" property="processing_status" jdbcType="BOOLEAN"/>
+        <result column="complaintType" property="infringement_complaint_type" jdbcType="VARCHAR"/>
+        <result column="complaintIntro" property="complaint_intro" jdbcType="VARCHAR"/>
+        <result column="tableStatus" property="table_status" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <select id="queryByuserId" resultMap="PatentComplaintsMap">
+        select
+            complaintId, intellectuatPropertyId, complaintTime, userId, complaintProcess, complaintType, complaintIntro, tableStatus
+        from patent_complaints
+        where user_id = #{userId} and tableStatus = true
+    </select>
+
+    <insert id="insertComplaint" keyProperty="complaintId" useGeneratedKeys="true">
+    insert into patent_complaints(intellectuatPropertyId, complaintTime, userId, complaintProcess, complaintType,
+    complaintIntro, tableStatus)
+    values (#{intellectual_patent_id}, #{complaint_time}, #{user_id}, #{processing_status},
+    #{infringement_complaint_type}, #{complaint_intro}, true)
+    </insert>
+
+    <update id="updateComplaint">
+        update patent_complaints
+        <set>
+            <if test="intellectual_patent_id != null">
+                intellectuatPropertyId = #{intellectual_patent_id},
+            </if>
+            <if test="complaint_time != null">
+                complaintTime = #{complaint_time},
+            </if>
+            <if test="user_id != null">
+                userId = #{user_id},
+            </if>
+            <if test="processing_status != null">
+                complaintProcess = #{processing_status},
+            </if>
+            <if test="infringement_complaint_type != null">
+                complaintType = #{infringement_complaint_type},
+            </if>
+            <if test="complaint_intro != null">
+                complaintIntro = #{complaint_intro},
+            </if>
+            <if test="table_status != null">
+                tableStatus = #{table_status},
+            </if>
+        </set>
+        where complaintId = #{complaint_id}
+    </update>
+
+    <delete id="deleteByuserId">
+        update patent_complaints
+        <set>
+            tableStatus = false
+        </set>
+        where user_id = #{userId}
+    </delete>
+
+    <select id="queryAll" resultMap="PatentComplaintsMap">
+        select
+            complaintId, intellectuatPropertyId, complaintTime, userId, complaintProcess, complaintType, complaintIntro, tableStatus
+        from patent_complaints
+        where tableStatus = true
+
+    </select>
+
+</mapper>
