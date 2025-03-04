@@ -107,6 +107,14 @@ public class IntellectualPropertyController {
         return ResponseEntity.ok(jsonResult);
     }
 
+    @GetMapping("/deleteByNames")
+    public ResponseEntity<JSONResult> deleteByNames(@Param("names")List<String> names) {
+        Integer res = this.intellectualPropertyService.deleteByNames(names);
+        String msg = "数据批量删除成功";
+        int statusCode = HttpStatus.OK.value();
+        JSONResult jsonResult = new JSONResult("success",statusCode,msg,res);
+        return ResponseEntity.ok(jsonResult);
+    }
     /**
      *
      * 查询所有行数据

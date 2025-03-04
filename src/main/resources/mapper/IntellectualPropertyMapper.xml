@@ -86,12 +86,23 @@
     </delete>
 
 
-    <delete id="deleByName">
+    <delete id="deleteByName">
         update intellectual_property
         <set>
             table_status = false
         </set>
         where intellectual_name = #{intellectualName}
+    </delete>
+
+    <delete id="deleteByNames">
+        update intellectual_property
+        <set>
+            table_status = false
+        </set>
+        where intellectual_name in
+        <foreach collection="intellectualNames" item="intellectualName" open="(" close=")" separator=",">
+            #{intellectualName}
+        </foreach>
     </delete>
 
     <!--获取所有行信息-->

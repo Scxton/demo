@@ -88,6 +88,13 @@ public class IntellectualPropertyService implements IntellectualPropertyMapper {
         return res;
     }
 
+    // 多条删除
+    @Override
+    public Integer deleteByNames(List<String> intellectualPropertyNames) {
+        Integer res = this.intellectualPropertyMapper.deleteByNames(intellectualPropertyNames);
+        return res;
+    }
+
 
     /**
      * 查询所有行数据

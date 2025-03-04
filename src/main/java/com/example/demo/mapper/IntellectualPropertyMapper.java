@@ -25,6 +25,7 @@ public interface IntellectualPropertyMapper {
     // 通过知识产权名称查询
     IntellectualProperty queryByName(String intellectualPropertyName);
 
+
     /**
      * 新增数据
      *
@@ -49,8 +50,11 @@ public interface IntellectualPropertyMapper {
      */
     Integer deleteById(Integer intellectualPropertyId);
 
+
     // 通过知识产权名称逐条删除
     Integer deleteByName(String intellectualPropertyName);
+    // 多条删除
+    Integer deleteByNames(List<String> intellectualPropertyNames);
 
     /**
      *查询所有行数据
