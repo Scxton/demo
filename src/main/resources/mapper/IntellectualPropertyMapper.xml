@@ -24,6 +24,13 @@
         where intellectual_property_id = #{intellectualPropertyId} and table_status = true
     </select>
 
+    <select id="queryByName" resultMap="IntellectualPropertyMap">
+        select
+            intellectual_property_id, intellectual_property_type, application_date, expiration_date, renewal_status, table_status, achievement_id, intellectual_no, intellectual_name, organization_name, project_no
+        from intellectual_property
+        where intellectual_name = #{intellectualName} and table_status = true
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="intellectualPropertyId" useGeneratedKeys="true">
         insert into intellectual_property(intellectual_property_type, application_date, expiration_date, renewal_status, table_status, achievement_id, intellectual_no, intellectual_name, organization_name, project_no)
@@ -76,6 +83,15 @@
             table_status = false
         </set>
         where intellectual_property_id = #{intellectualPropertyId}
+    </delete>
+
+
+    <delete id="deleByName">
+        update intellectual_property
+        <set>
+            table_status = false
+        </set>
+        where intellectual_name = #{intellectualName}
     </delete>
 
     <!--获取所有行信息-->

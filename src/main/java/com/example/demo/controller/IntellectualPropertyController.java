@@ -43,6 +43,16 @@ public class IntellectualPropertyController {
         return ResponseEntity.ok(jsonResult);
     }
 
+    // 通过知识产权名称查询
+    @GetMapping("queryByName")
+    public ResponseEntity<JSONResult> queryByName(@Param("name") String name) {
+        IntellectualProperty res = this.intellectualPropertyService.queryByName(name);
+        String msg = "查询成功";
+        int statusCode = HttpStatus.OK.value();
+        JSONResult jsonResult = new JSONResult("success",statusCode,msg,res);
+        return ResponseEntity.ok(jsonResult);
+    }
+
     /**
      * 新增数据
      *
@@ -82,6 +92,15 @@ public class IntellectualPropertyController {
     @GetMapping("/delete")
     public ResponseEntity<JSONResult> deleteById(@Param("id")Integer id) {
         Integer res = this.intellectualPropertyService.deleteById(id);
+        String msg = "数据删除成功";
+        int statusCode = HttpStatus.OK.value();
+        JSONResult jsonResult = new JSONResult("success",statusCode,msg,res);
+        return ResponseEntity.ok(jsonResult);
+    }
+
+    @GetMapping("/deleteByName")
+    public ResponseEntity<JSONResult> deleteByName(@Param("name")String name) {
+        Integer res = this.intellectualPropertyService.deleteByName(name);
         String msg = "数据删除成功";
         int statusCode = HttpStatus.OK.value();
         JSONResult jsonResult = new JSONResult("success",statusCode,msg,res);

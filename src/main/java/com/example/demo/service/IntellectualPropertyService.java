@@ -39,6 +39,12 @@ public class IntellectualPropertyService implements IntellectualPropertyMapper {
         return this.intellectualPropertyMapper.queryById(intellectualPropertyId);
     }
 
+    // 通过知识产权名称查询
+    @Override
+    public IntellectualProperty queryByName(String intellectualPropertyName) {
+        return this.intellectualPropertyMapper.queryByName(intellectualPropertyName);
+    }
+
     /**
      * 新增数据
      *
@@ -73,7 +79,16 @@ public class IntellectualPropertyService implements IntellectualPropertyMapper {
         Integer res = this.intellectualPropertyMapper.deleteById(intellectualPropertyId);
         return res;
     }
-    
+
+
+    // 通过知识产权名称逐条删除
+    @Override
+    public Integer deleteByName(String intellectualPropertyName) {
+        Integer res = this.intellectualPropertyMapper.deleteByName(intellectualPropertyName);
+        return res;
+    }
+
+
     /**
      * 查询所有行数据
      *
