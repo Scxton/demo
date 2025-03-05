@@ -1,15 +1,70 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class PatentComplaints {
     private Integer complaintId;
     private Integer intellectuatPropertyId;
     private String complaintTime;
     private Integer userId;
-    private Boolean complaintProcess;
+
+    private ComplaintProcessStatus complaintProcess;
     private String complaintType;
     private String  complaintIntro;
     private Boolean tableStatus;;
+
+//    public enum complaintProcessStatus{
+//        NOT_ACCEPTED("未受理"),
+//        IN_PROGRESS("受理中"),
+//        ACCEPTED("已受理");
+//
+//        private final String description;
+//
+//        complaintProcessStatus(String description) {
+//            this.description = description;
+//        }
+//
+//        @JsonValue  // 确保 JSON 传输字符串
+//        public String getDescription() {
+//            return description;
+//        }
+//    }
+
+    public enum ComplaintProcessStatus {
+        NOT_ACCEPTED(0, "未受理"),
+        IN_PROGRESS(1, "受理中"),
+        ACCEPTED(2, "已受理");
+
+        private final int code;
+        private final String description;
+
+        ComplaintProcessStatus(int code, String description) {
+            this.code = code;
+            this.description = description;
+        }
+
+        @JsonValue  // 确保 JSON 传输整数
+        public int getCode() {
+            return code;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        // 通过整数获取枚举
+        @JsonCreator
+        public static ComplaintProcessStatus fromCode(int code) {
+            for (ComplaintProcessStatus status : ComplaintProcessStatus.values()) {
+                if (status.code == code) {
+                    return status;
+                }
+            }
+            throw new IllegalArgumentException("未知的投诉状态: " + code);
+        }
+    }
 
     public Integer getComplaintId() {
         return complaintId;
@@ -43,11 +98,11 @@ public class PatentComplaints {
         this.complaintIntro = complaintIntro;
     }
 
-    public Boolean getComplaintProcess() {
+    public ComplaintProcessStatus getComplaintProcess() {
         return complaintProcess;
     }
 
-    public void setComplaintProcess(Boolean complaintProcess) {
+    public void setComplaintProcess(ComplaintProcessStatus complaintProcess) {
         this.complaintProcess = complaintProcess;
     }
 
